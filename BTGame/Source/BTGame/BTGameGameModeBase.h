@@ -13,8 +13,4 @@ UCLASS()
 class BTGAME_API ABTGameGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
-	
-	
-	
 };
