@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "Tank.h"
 #include "Engine/World.h"
 #include "TankAIController.generated.h"
 
 /**
  * 
  */
+class ATank;
+
 UCLASS()
 class BTGAME_API ATankAIController : public AAIController
 {

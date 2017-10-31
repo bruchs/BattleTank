@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Tank.h"
 #define OUT
 
 ATank* ATankPlayerController::GetControlledTank() const
@@ -11,12 +12,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Player Controller Begin Play"));
-
 	ATank* ControlledTank = GetControlledTank();
-
-	if (ControlledTank != nullptr)
-		UE_LOG(LogTemp, Warning, TEXT("Tank ID: %s"), *(ControlledTank->GetName()));
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -72,8 +68,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *HitResult.GetActor()->GetName());
-
 		HitLocation = HitResult.Location;
 		return true;
 	}

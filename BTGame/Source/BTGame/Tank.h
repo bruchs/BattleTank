@@ -3,9 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
+#include "Engine/World.h"
 #include "Tank.generated.h"
+
+class UTankAimingComponent;
+class AProjectile;
 
 UCLASS()
 class BTGAME_API ATank : public APawn
@@ -18,7 +21,16 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
+	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetAimBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetAimTurretReference(UTankTurret* TurretToSet);
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed;
@@ -29,9 +41,7 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UTankBarrel* TankBarrel = nullptr; // Local Barrel Reference For Spawning Projectile.
 };

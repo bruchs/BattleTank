@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
 #include "TankBarrel.h"
-
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -19,6 +19,11 @@ void UTankAimingComponent::SetAimBarrelReference(UTankBarrel* AimBarrel)
 	UTankAimingComponent::AimBarrel = AimBarrel;
 }
 
+void UTankAimingComponent::SetAimTurretReference(UTankTurret* AimTurret)
+{
+	UTankAimingComponent::AimTurret = AimTurret;
+}
+
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if(AimBarrel != nullptr)
@@ -27,7 +32,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		FVector StartLocation = AimBarrel->GetSocketLocation(FName("Shooting Point"));
 
 		// Calculate The Launch Velocity
-		if (UGameplayStatics::SuggestProjectileVelocity(this, OUT LaunchVelocity, StartLocation, HitLocation, LaunchSpeed, ESuggestProjVelocityTraceOption::DoNotTrace))
+		if (UGameplayStatics::SuggestProjectileVelocity(this, OUT LaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0.0F, 0.0F, ESuggestProjVelocityTraceOption::DoNotTrace))
 		{
 			FVector AimDirection = LaunchVelocity.GetSafeNormal();
 			UTankAimingComponent::MoveBarrelTowards(AimDirection);
@@ -41,7 +46,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("Aim As Rotator: %s"), *AimAsRotator.ToString());
-
-	AimBarrel->Elevate(5.0F); // TODO Remove Magic Number.
+	AimBarrel->Elevate(DeltaRotator.Pitch);
+	AimTurret->Rotate(DeltaRotator.Yaw);
 }
