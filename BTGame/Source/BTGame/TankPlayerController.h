@@ -23,10 +23,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrosshair();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.33f;
 
 	UPROPERTY(EditAnywhere)
