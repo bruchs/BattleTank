@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Matias Fuentes.
 
 #pragma once
 
@@ -8,9 +8,9 @@
 #include "TankPlayerController.generated.h"
 
 /**
- * 
+ *  Responsible For Helping The Player Aim.
  */
-class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BTGAME_API ATankPlayerController : public APlayerController
@@ -18,7 +18,6 @@ class BTGAME_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
-	ATank* GetControlledTank() const;
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrosshair();
@@ -29,8 +28,12 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairYLocation = 0.33f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
+	void FoundAimingComponent(UTankAimingComponent* AimingComponentRef);
 
 private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;

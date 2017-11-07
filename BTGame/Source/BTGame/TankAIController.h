@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Matias Fuentes.
 
 #pragma once
 
@@ -10,7 +10,6 @@
 /**
  * 
  */
-class ATank;
 
 UCLASS()
 class BTGAME_API ATankAIController : public AAIController
@@ -21,6 +20,9 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	ATank* EnemyTarget;
-	ATank* ControlledTank;
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float AcceptanceRadius = 6000.0F; // How Close Can Get To The Enemy Position.
+
+	APawn* EnemyTarget;
+	APawn* ControlledTank;
 };

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Matias Fuentes.
 
 #pragma once
 
@@ -23,12 +23,12 @@ public:
 	void IntendTurnRight(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = Movement)
-	void IntendTurnLeft(float Throw);
-
-	UFUNCTION(BlueprintCallable, Category = Movement)
 	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
 private:
+	// Called From The Pathfinfing Logic By The AI Controller.
+	void RequestDirectMove(const FVector& Speed, bool bForceMaxSpeed) override;
+
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 };

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/PrimitiveComponent.h"
+#include "Engine/World.h"
 #include "TankTrack.generated.h"
 
 /**
@@ -19,7 +20,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);
 
+protected:
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	void ApplySidewaysForce();
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float TankMaxDrivingForce = 40000.0F;
+
+	void DriveTrack();
+	float CurrentThrottle = 0.0F;
+
+	UTankTrack();
 };
